@@ -1,5 +1,3 @@
-
-
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -7,7 +5,7 @@ import '../../../app/locator.dart';
 import '../../../core/models/recipe.dart';
 import '../../../core/services/api.dart';
 
-class SearchViewModel extends FutureViewModel{
+class SearchViewModel extends FutureViewModel {
   final String searchKeyword;
   NavigationService _navigationService = locator<NavigationService>();
 
@@ -23,5 +21,4 @@ class SearchViewModel extends FutureViewModel{
   void popView() {
     _navigationService.back();
   }
-
 }

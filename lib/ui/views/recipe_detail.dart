@@ -40,33 +40,23 @@ class _ProductDetailPageState extends State<RecipeDetailView>
   }
 
   Widget _fancyDivider() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            _colorWidget(LightColor.yellowColor),
-            SizedBox(
-              width: 30,
-            ),
-            _colorWidget(LightColor.lightBlue),
-            SizedBox(
-              width: 30,
-            ),
-            _colorWidget(LightColor.black),
-            SizedBox(
-              width: 30,
-            ),
-            _colorWidget(LightColor.red),
-            SizedBox(
-              width: 30,
-            ),
-            _colorWidget(LightColor.skyBlue),
-          ],
-        )
-      ],
+    return Padding(
+      padding: EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              _colorWidget(LightColor.yellowColor),
+              _colorWidget(LightColor.lightBlue),
+              _colorWidget(LightColor.black),
+              _colorWidget(LightColor.red),
+              _colorWidget(LightColor.skyBlue),
+            ],
+          )
+        ],
+      ),
     );
   }
 
@@ -97,74 +87,95 @@ class _ProductDetailPageState extends State<RecipeDetailView>
   Widget build(BuildContext context) {
     recipe = ModalRoute.of(context).settings.arguments;
     isLiked = _saved.isSaved(recipe.recipeId);
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Text('Details', style: AppTheme.titleStyle,),
-        leading: AppBarCustomIcon(
-            icon: Icons.arrow_back_ios,
-            color: Colors.black54,
-            size: 15,
-            padding: 8,
-            isOutLine: true,
-            onPressed: () {
-              Navigator.of(context).pop();
-            }),
-        trailing: AppBarCustomIcon(
-          icon: isLiked ? Icons.favorite : Icons.favorite_border,
-          color: isLiked ? LightColor.red : LightColor.lightGrey,
-          size: 15,
-          padding: 7,
-          isOutLine: false,
-          onPressed: () async {
-            if (isLiked)
-              await _saved.removeRecipe(recipe.recipeId);
-            else
-            await _saved.addRecipe(recipe.recipeId);
-            setState(() {
-              isLiked = _saved.isSaved(recipe.recipeId);
-            });
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          color: Colors.black,
+          onPressed: () {
+            Navigator.of(context).pop();
           },
         ),
-        backgroundColor: ThemeColors.background,
+        title: Text(
+          'Details',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        brightness: Brightness.light,
+        actions: <Widget>[
+          isLiked
+              ? IconButton(
+                  icon: Icon(Icons.favorite),
+                  color: LightColor.red,
+                  onPressed: () async {
+                    await _saved.removeRecipe(recipe.recipeId);
+                    setState(() {});
+                  },
+                )
+              : IconButton(
+                  icon: Icon(Icons.favorite_border),
+                  color: LightColor.black,
+                  onPressed: () async {
+                    await _saved.addRecipe(recipe.recipeId);
+                    setState(() {
+                      isLiked = _saved.isSaved(recipe.recipeId);
+                    });
+                  },
+                ),
+        ],
       ),
-      child: Scaffold(
-        body: SafeArea(
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xfffbfbfb),
-                  Color(0xfff7f7f7),
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xfffbfbfb),
+              Color(0xfff7f7f7),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: ListView(
+          children: <Widget>[
+            ImageBanner(
+              imageAssetPath: recipe.imageAssetPath,
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                bottom: 8.0,
+                left: 16.0,
+                right: 16.0,
+                top: 16.0,
+              ),
+              child: Text(
+                recipe.recipeTitle,
+                style: AppTheme.h1Style,
               ),
             ),
-            child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              children: <Widget>[
-                ImageBanner(
-                  imageAssetPath: recipe.imageAssetPath,
-                ),
-                SizedBox(height: 15),
-                Text(
-                  recipe.recipeTitle,
-                  style: AppTheme.h1Style,
-                ),
-                SizedBox(height: 15),
-                _fancyDivider(),
-                SizedBox(height: 15),
-                IngredientsSection(
-                  ingredients: getIngredients(recipe),
-                ),
-                SizedBox(height: 20),
-                _fancyDivider(),
-                SizedBox(height: 20),
-                InstructionsSection(
-                    instructions: recipe.analyzedInstructions.first?.steps),
-              ],
+            // Divider(
+            //   color: Colors.black54,
+            // ),
+            _fancyDivider(),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+              child: IngredientsSection(
+                ingredients: getIngredients(recipe),
+              ),
             ),
-          ),
+            _fancyDivider(),
+            // Divider(
+            //   color: Colors.black54,
+            // ),
+            Padding(
+              child: InstructionsSection(
+                instructions: recipe.analyzedInstructions.first?.steps,
+              ),
+              padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+            )
+          ],
         ),
       ),
     );
@@ -189,7 +200,7 @@ class NumberedTile extends StatelessWidget {
             style: BorderStyle.solid,
           ),
         ),
-        labelPadding: EdgeInsets.all(5),
+        labelPadding: EdgeInsets.all(6.0),
       ),
       title: content,
     );
@@ -207,10 +218,6 @@ class ImageBanner extends StatelessWidget {
       child: Image.asset(
         imageAssetPath,
         fit: BoxFit.cover,
-      ),
-      clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
       ),
     );
   }
@@ -266,7 +273,7 @@ class InstructionsSection extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        SizedBox(height: 10),
+        SizedBox(height: 16.0),
         ListView.builder(
           primary: false,
           shrinkWrap: true,
@@ -290,7 +297,7 @@ class InstructionsSection extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               elevation: 3,
-              margin: EdgeInsets.symmetric(vertical: 10),
+              margin: EdgeInsets.symmetric(vertical: 4.0),
               shadowColor: Color(0xffffffff),
             );
           },
@@ -300,5 +307,3 @@ class InstructionsSection extends StatelessWidget {
     );
   }
 }
-
-
