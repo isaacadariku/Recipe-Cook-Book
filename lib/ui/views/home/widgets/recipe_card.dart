@@ -22,41 +22,43 @@ class RecipeCard extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
       child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              height: 150,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(16.0),
-                  topLeft: Radius.circular(16.0),
-                ),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: recipe.imageAssetPath != null
-                      ? AssetImage(recipe.imageAssetPath)
-                      : NetworkImage(recipe.imageUrl),
+        child: Hero(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                height: 150,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(16.0),
+                    topLeft: Radius.circular(16.0),
+                  ),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: recipe.imageAssetPath != null
+                        ? AssetImage(recipe.imageAssetPath)
+                        : NetworkImage(recipe.imageUrl),
+                  ),
                 ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 12.0, left: 12.0, right: 12.0),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                recipe.recipeTitle,
-                style: AppTheme.h2Style.copyWith(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.only(top: 12.0, left: 12.0, right: 12.0),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    recipe.recipeTitle,
+                    style: AppTheme.h2Style.copyWith(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                    maxLines: 4,
+                  ),
                 ),
-                overflow: TextOverflow.ellipsis,
-                softWrap: true,
-                maxLines: 4,
               ),
-            ),
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
                 child: Row(
                   children: <Widget>[
                     Icon(
@@ -70,8 +72,9 @@ class RecipeCard extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
+          tag: recipe.recipeId,
         ),
       ).ripple(() {
         _navigationService.navigateTo(Routes.recipeDetailsViewRoute,

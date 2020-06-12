@@ -47,7 +47,7 @@ class HomeView extends StatelessWidget {
                             ? Center(
                                 child: CircularProgressIndicator(),
                               )
-                            : model.recipes?.length ?? 0 == 0
+                            : (model.recipes?.length ?? 0) == 0
                                 ? Container(
                                     height: MediaQuery.of(context).size.height *
                                         0.5,
@@ -81,7 +81,7 @@ class HomeView extends StatelessWidget {
                                       crossAxisCount: 2,
                                       crossAxisSpacing: 16,
                                       mainAxisSpacing: 16,
-                                      childAspectRatio: 1 / 1.5,
+                                      childAspectRatio: 1 / 1.9,
                                     ),
                                     itemBuilder:
                                         (BuildContext context, int index) {
