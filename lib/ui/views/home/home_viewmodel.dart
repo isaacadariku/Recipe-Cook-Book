@@ -19,8 +19,8 @@ class HomeViewModel extends BaseViewModel {
   }
 
   String get title => _selectedIndex == 0
-      ? 'Find the best recipe for you'
-      : 'Here are your favourite recipes';
+      ? 'Find the best \nrecipe for you'
+      : 'Here are your \nfavourite recipes';
 
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;

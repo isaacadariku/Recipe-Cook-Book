@@ -74,19 +74,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       image: 'assets/images/onboarding1.png',
                       text1: 'Search for your\nfavorite Recipes',
                       text2:
-                      'With our app, you can find over 1000 \nrecipes to use to prepare your meal',
+                          'With our app, you can find over 1000 \nrecipes to use to prepare your meal',
                     ),
                     PageScreens(
                       image: 'assets/images/onboarding2.png',
                       text1: 'Use recipes to\nprepare meals',
                       text2:
-                      'Find over 1000 recipes to use to \nprepare your meal',
+                          'Find over 1000 recipes to use to \nprepare your meal',
                     ),
                     PageScreens(
                       image: 'assets/images/onboarding3.png',
                       text1: 'Save your favorite\nrecipes',
                       text2:
-                      'Saving your favorite recipe for another \ncook is just a click',
+                          'Saving your favorite recipe for another \ncook is just a click',
                     ),
                   ],
                 ),
@@ -100,53 +100,53 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
               _currentPage != _numPages - 1
                   ? Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Container(
-                    child: FlatButton(
-                      onPressed: () {
-                        _pageController.jumpToPage(_numPages);
-                      },
-                      child: Text(
-                        'Skip',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.0,
-                        ),
-                      ),
-                    ),
-                  ),
-                  FlatButton(
-                    onPressed: () {
-                      _pageController.nextPage(
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.ease,
-                      );
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          'Next',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
+                        Container(
+                          child: FlatButton(
+                            onPressed: () {
+                              _pageController.jumpToPage(_numPages);
+                            },
+                            child: Text(
+                              'Skip',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                              ),
+                            ),
                           ),
                         ),
-                        SizedBox(width: 5.0),
-                        Icon(
-                          Icons.arrow_forward,
-                          color: Colors.white,
-                          size: 24.0,
+                        FlatButton(
+                          onPressed: () {
+                            _pageController.nextPage(
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.ease,
+                            );
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Text(
+                                'Next',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20.0,
+                                ),
+                              ),
+                              SizedBox(width: 5.0),
+                              Icon(
+                                Icons.arrow_forward,
+                                color: Colors.white,
+                                size: 24.0,
+                              ),
+                            ],
+                          ),
                         ),
                       ],
-                    ),
-                  ),
-                ],
-              )
+                    )
                   : Container(
-                height: 60,
+                    height: 60,
                 child: RaisedButton(
                   elevation: 4,
                   onPressed: () async {
@@ -163,11 +163,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       color: ThemeColors.lightOrange1,
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                  color: Colors.white,
-                ),
-              ),
             ],
           ),
         ),
