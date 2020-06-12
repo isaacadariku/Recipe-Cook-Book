@@ -146,24 +146,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ],
                     )
                   : Container(
-                      height: 60,
-                      child: RaisedButton(
-                        elevation: 4,
-                        onPressed: () async {
-                          await locator<StorageUtil>()
-                              .getBool('HAS_BEEN_INTRODUCED');
-                          _navigationService
-                              .clearStackAndShow(Routes.homeViewRoute);
-                        },
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        child: Text(
-                          'Get started',
-                          style: TextStyle(
-                            color: ThemeColors.lightOrange1,
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.bold,
+                    height: 60,
+                child: RaisedButton(
+                  elevation: 4,
+                  onPressed: () async {
+                    await locator<StorageUtil>().putBool('HAS_BEEN_INTRODUCED', true);
+                    _navigationService
+                        .clearStackAndShow(Routes.homeViewRoute);
+                  },
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Text(
+                    'Get started',
+                    style: TextStyle(
+                      color: ThemeColors.lightOrange1,
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
                           ),
                         ),
                         color: Colors.white,
