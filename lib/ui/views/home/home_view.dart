@@ -22,44 +22,55 @@ class HomeView extends StatelessWidget {
         child: Scaffold(
           backgroundColor: Color(0xffeeeeee),
           body: SafeArea(
-            child: ListView(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20,),
-              children: <Widget>[
-                Text(
-                  model.title,
-                  style: AppTheme.h1Style.copyWith(
-                    color: ThemeColors.lightOrange1,
-                    fontSize: 32,
+            child: Container(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(height: 20),
+                  Text(
+                    model.title,
+                    style: AppTheme.h1Style.copyWith(
+                      color: ThemeColors.lightOrange1,
+                      fontSize: 36,
+                    ),
                   ),
-                ),
-
-                SizedBox(height: 10),
-                model.selectedIndex == 1 ? Container() : SearchBar(
-                  func: model.search
-                ),
-
-                SizedBox(height: 30),
-                model.isBusy
-                    ? Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 20,
-                          mainAxisSpacing: 30,
-                          childAspectRatio: 1/1.9,
-                        ),
-                        itemBuilder: (BuildContext context, int index) {
-                          return RecipeCard(
-                            recipe: model.recipes[index],
-                          );
-                        },
-                        itemCount: model.recipes != null ? model.recipes.length : 0,
-                        shrinkWrap: true,
-                        primary: false,
-                      ),
-              ],
+                  SizedBox(height: 24),
+                  model.selectedIndex == 1
+                      ? Container()
+                      : SearchBar(func: model.search),
+                  SizedBox(height: 16),
+                  Expanded(
+                    child: ListView(
+                      children: <Widget>[
+                        model.isBusy
+                            ? Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : GridView.builder(
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 16,
+                                  mainAxisSpacing: 16,
+                                  childAspectRatio: 1 / 1.5,
+                                ),
+                                itemBuilder: (BuildContext context, int index) {
+                                  return RecipeCard(
+                                    recipe: model.recipes[index],
+                                  );
+                                },
+                                itemCount: model.recipes != null
+                                    ? model.recipes.length
+                                    : 0,
+                                shrinkWrap: true,
+                                primary: false,
+                              ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           bottomSheet: CustomBottomNavigationBar(
@@ -68,11 +79,9 @@ class HomeView extends StatelessWidget {
             onIconPresedCallback: model.bottomNavbarPressed,
             selectedIndex: model.selectedIndex,
           ),
-
         ),
       ),
       viewModelBuilder: () => HomeViewModel(),
     );
   }
 }
-
