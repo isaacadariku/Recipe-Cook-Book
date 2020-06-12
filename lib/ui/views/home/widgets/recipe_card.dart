@@ -20,62 +20,63 @@ class RecipeCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: LightColor.background,
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-//        boxShadow: <BoxShadow>[
-//          BoxShadow(color: Color(0xffeeeeee), blurRadius: 15, spreadRadius: 10),
-//        ],
+        borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-
             Container(
-              height: 130,
-              width: 130,
+              height: 150,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100.0),
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(16.0),
+                  topLeft: Radius.circular(16.0),
+                ),
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: recipe.imageAssetPath != null ? AssetImage(recipe.imageAssetPath) : NetworkImage(recipe.imageUrl),
+                  image: recipe.imageAssetPath != null
+                      ? AssetImage(recipe.imageAssetPath)
+                      : NetworkImage(recipe.imageUrl),
                 ),
               ),
             ),
-
-            Expanded(
-              child: Container(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  recipe.recipeTitle,
-                  style: AppTheme.h2Style.copyWith(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w800,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: true,
-                  maxLines: 4,
+            Container(
+              padding: EdgeInsets.only(top: 12.0, left: 12.0, right: 12.0),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                recipe.recipeTitle,
+                style: AppTheme.h2Style.copyWith(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+                overflow: TextOverflow.ellipsis,
+                softWrap: true,
+                maxLines: 4,
+              ),
+            ),
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Row(
+                  children: <Widget>[
+                    Icon(
+                      Icons.timer,
+                      size: 16,
+                    ),
+                    SizedBox(width: 3),
+                    Expanded(
+                      child: Text('Ready in ${recipe.readyInMinutes} minutes'),
+                    ),
+                  ],
                 ),
               ),
             ),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.timer, size: 16,),
-                  SizedBox(width: 3),
-                  Expanded(
-                    child: Text('Ready in ${recipe.readyInMinutes} minutes'),
-                  ),
-                ],
-              ),
-            ),
-
           ],
         ),
       ).ripple(() {
-        _navigationService.navigateTo(Routes.recipeDetailsViewRoute, arguments: recipe);
+        _navigationService.navigateTo(Routes.recipeDetailsViewRoute,
+            arguments: recipe);
       }, borderRadius: BorderRadius.all(Radius.circular(20))),
     );
   }
