@@ -6,7 +6,6 @@ import 'package:recipe_cook_book/constants/themes/light_color.dart';
 import 'package:recipe_cook_book/constants/themes/theme.dart';
 import 'package:recipe_cook_book/core/models/recipe.dart';
 import 'package:recipe_cook_book/core/services/saved_recipes.dart';
-import 'package:recipe_cook_book/ui/views/home/widgets/title_text.dart';
 import 'package:recipe_cook_book/ui/views/widgets/custom_appbar_icon.dart';
 
 class RecipeDetailView extends StatefulWidget {
@@ -28,11 +27,13 @@ class _ProductDetailPageState extends State<RecipeDetailView>
   void initState() {
     super.initState();
     controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     animation = Tween<double>(begin: 0, end: 1).animate(
         CurvedAnimation(parent: controller, curve: Curves.easeInToLinear));
     controller.forward();
   }
+
+
 
   @override
   void dispose() {
@@ -88,95 +89,102 @@ class _ProductDetailPageState extends State<RecipeDetailView>
   Widget build(BuildContext context) {
     recipe = ModalRoute.of(context).settings.arguments;
     isLiked = _saved.isSaved(recipe.recipeId);
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          color: Colors.black,
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        leading: Material(
+          color: Colors.transparent,
+          child: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            color: Colors.black,
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
         ),
-        title: Text(
+        middle: Text(
           'Details',
           style: TextStyle(
             color: Colors.black,
           ),
         ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        brightness: Brightness.light,
-        actions: <Widget>[
-          isLiked
-              ? IconButton(
-                  icon: Icon(Icons.favorite),
-                  color: LightColor.red,
-                  onPressed: () async {
-                    await _saved.removeRecipe(recipe.recipeId);
-                    setState(() {});
-                  },
-                )
-              : IconButton(
-                  icon: Icon(Icons.favorite_border),
-                  color: LightColor.black,
-                  onPressed: () async {
-                    await _saved.addRecipe(recipe.recipeId);
-                    setState(() {
-                      isLiked = _saved.isSaved(recipe.recipeId);
-                    });
-                  },
-                ),
-        ],
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xfffbfbfb),
-              Color(0xfff7f7f7),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+        trailing: AnimatedSize( // Perform animation properly
+          duration: Duration(milliseconds: 5200),
+          vsync: this,
+          child: Material(
+             color: Colors.transparent,
+             child: IconButton(
+               onPressed: () async {
+                 if (_saved.isSaved(recipe.recipeId))
+                   _saved.removeRecipe(recipe.recipeId);
+                 else _saved.addRecipe(recipe.recipeId);
+                 setState(() {
+                   isLiked = _saved.isSaved(recipe.recipeId);
+                 });
+               },
+               icon: Icon(
+                 isLiked ? Icons.favorite : Icons.favorite_border,
+                 color: isLiked ? LightColor.red : LightColor.black,
+               ),
+             ),
+           ),
         ),
-        child: ListView(
-          children: <Widget>[
-            ImageBanner(
-              imageAssetPath: recipe.imageAssetPath,
+      ),
+      child: Scaffold(
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xfffbfbfb),
+                Color(0xfff7f7f7),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: 8.0,
-                left: 16.0,
-                right: 16.0,
-                top: 16.0,
+          ),
+          child: ListView(
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+              ImageBanner(
+                imageAssetPath: recipe.imageAssetPath,
               ),
-              child: Text(
-                recipe.recipeTitle,
-                style: AppTheme.h1Style,
+              Padding(
+                padding: EdgeInsets.only(
+                  bottom: 8.0,
+                  left: 16.0,
+                  right: 16.0,
+                  top: 16.0,
+                ),
+                child: Text(
+                  recipe.recipeTitle,
+                  style: AppTheme.h1Style,
+                ),
               ),
-            ),
-            // Divider(
-            //   color: Colors.black54,
-            // ),
-            _fancyDivider(),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-              child: IngredientsSection(
-                ingredients: getIngredients(recipe),
+                ],
+                mainAxisSize: MainAxisSize.min,
               ),
-            ),
-            _fancyDivider(),
-            // Divider(
-            //   color: Colors.black54,
-            // ),
-            Padding(
-              child: InstructionsSection(
-                instructions: recipe.analyzedInstructions.first?.steps,
+              // Divider(
+              //   color: Colors.black54,
+              // ),
+              _fancyDivider(),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                child: IngredientsSection(
+                  ingredients: getIngredients(recipe),
+                ),
               ),
-              padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-            )
-          ],
+              _fancyDivider(),
+              // Divider(
+              //   color: Colors.black54,
+              // ),
+              Padding(
+                child: InstructionsSection(
+                  instructions: recipe.analyzedInstructions.first?.steps,
+                ),
+                padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -252,7 +260,7 @@ class IngredientsSection extends StatelessWidget {
               ),
             );
           },
-          itemCount: ingredients.length,
+          itemCount: ingredients?.length ?? 0,
         ),
       ],
     );
@@ -302,7 +310,7 @@ class InstructionsSection extends StatelessWidget {
               shadowColor: Color(0xffffffff),
             );
           },
-          itemCount: instructions.length,
+          itemCount: instructions?.length ?? 0,
         ),
       ],
     );

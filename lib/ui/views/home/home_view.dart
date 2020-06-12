@@ -47,25 +47,52 @@ class HomeView extends StatelessWidget {
                             ? Center(
                                 child: CircularProgressIndicator(),
                               )
-                            : GridView.builder(
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 16,
-                                  mainAxisSpacing: 16,
-                                  childAspectRatio: 1 / 1.5,
-                                ),
-                                itemBuilder: (BuildContext context, int index) {
-                                  return RecipeCard(
-                                    recipe: model.recipes[index],
-                                  );
-                                },
-                                itemCount: model.recipes != null
-                                    ? model.recipes.length
-                                    : 0,
-                                shrinkWrap: true,
-                                primary: false,
-                              ),
+                            : (model.recipes?.length ?? 0) == 0
+                                ? Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.5,
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Text(
+                                            'Add a Favorite Recipe',
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            'You do not have any recipe \nin your favorites',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                : GridView.builder(
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 16,
+                                      mainAxisSpacing: 16,
+                                      childAspectRatio: 1 / 1.9,
+                                    ),
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return RecipeCard(
+                                        recipe: model.recipes[index],
+                                      );
+                                    },
+                                    itemCount: model.recipes?.length ?? 0,
+                                    shrinkWrap: true,
+                                    primary: false,
+                                  ),
                       ],
                     ),
                   ),

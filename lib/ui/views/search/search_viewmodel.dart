@@ -2,10 +2,8 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../app/locator.dart';
-import '../../../app/router.dart';
 import '../../../core/models/recipe.dart';
 import '../../../core/services/api.dart';
-import '../../../core/services/saved_recipes.dart';
 
 class SearchViewModel extends FutureViewModel {
   final String searchKeyword;

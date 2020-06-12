@@ -23,7 +23,7 @@ class SearchView extends StatelessWidget {
           crossAxisCount: 2,
           crossAxisSpacing: 16,
           mainAxisSpacing: 16,
-          childAspectRatio: 1 / 1.6,
+          childAspectRatio: 1 / 1.9,
         ),
         itemBuilder: (BuildContext context, int index) {
           return RecipeCard(
