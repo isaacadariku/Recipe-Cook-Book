@@ -41,20 +41,23 @@ class _ProductDetailPageState extends State<RecipeDetailView>
   }
 
   Widget _fancyDivider() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            _colorWidget(LightColor.yellowColor),
-            _colorWidget(LightColor.lightBlue),
-            _colorWidget(LightColor.black),
-            _colorWidget(LightColor.red),
-            _colorWidget(LightColor.skyBlue),
-          ],
-        )
-      ],
+    return Padding(
+      padding: EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              _colorWidget(LightColor.yellowColor),
+              _colorWidget(LightColor.lightBlue),
+              _colorWidget(LightColor.black),
+              _colorWidget(LightColor.red),
+              _colorWidget(LightColor.skyBlue),
+            ],
+          )
+        ],
+      ),
     );
   }
 
@@ -153,20 +156,20 @@ class _ProductDetailPageState extends State<RecipeDetailView>
                 style: AppTheme.h1Style,
               ),
             ),
-            Divider(
-              color: Colors.black54,
-            ),
-            // _fancyDivider(),
+            // Divider(
+            //   color: Colors.black54,
+            // ),
+            _fancyDivider(),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
               child: IngredientsSection(
                 ingredients: getIngredients(recipe),
               ),
             ),
-            //_fancyDivider(),
-            Divider(
-              color: Colors.black54,
-            ),
+            _fancyDivider(),
+            // Divider(
+            //   color: Colors.black54,
+            // ),
             Padding(
               child: InstructionsSection(
                 instructions: recipe.analyzedInstructions.first?.steps,
