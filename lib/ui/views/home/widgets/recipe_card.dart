@@ -5,7 +5,6 @@ import 'package:recipe_cook_book/constants/themes/theme.dart';
 
 import 'package:recipe_cook_book/ui/views/home/widgets/extentions.dart';
 import 'package:recipe_cook_book/constants/themes/light_color.dart';
-import 'package:recipe_cook_book/ui/views/home/widgets/title_text.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../../core/models/recipe.dart';

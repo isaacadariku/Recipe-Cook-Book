@@ -6,7 +6,6 @@ import 'package:recipe_cook_book/constants/themes/light_color.dart';
 import 'package:recipe_cook_book/constants/themes/theme.dart';
 import 'package:recipe_cook_book/core/models/recipe.dart';
 import 'package:recipe_cook_book/core/services/saved_recipes.dart';
-import 'package:recipe_cook_book/ui/views/home/widgets/title_text.dart';
 import 'package:recipe_cook_book/ui/views/widgets/custom_appbar_icon.dart';
 
 class RecipeDetailView extends StatefulWidget {
@@ -245,7 +244,7 @@ class IngredientsSection extends StatelessWidget {
               ),
             );
           },
-          itemCount: ingredients.length,
+          itemCount: ingredients?.length ?? 0,
         ),
       ],
     );
@@ -295,7 +294,7 @@ class InstructionsSection extends StatelessWidget {
               shadowColor: Color(0xffffffff),
             );
           },
-          itemCount: instructions.length,
+          itemCount: instructions?.length ?? 0,
         ),
       ],
     );

@@ -60,9 +60,7 @@ class HomeView extends StatelessWidget {
                                     recipe: model.recipes[index],
                                   );
                                 },
-                                itemCount: model.recipes != null
-                                    ? model.recipes.length
-                                    : 0,
+                                itemCount: model.recipes?.length ?? 0,
                                 shrinkWrap: true,
                                 primary: false,
                               ),

@@ -1,9 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:recipe_cook_book/ui/views/widgets/custom_appbar_icon.dart';
 import 'package:stacked/stacked.dart';
-
-import '../../../constants/colors.dart';
 import 'search_viewmodel.dart';
 import 'package:recipe_cook_book/ui/views/home/widgets/recipe_card.dart';
 
@@ -66,7 +63,7 @@ class SearchView extends StatelessWidget {
                             recipe: model.data[index],
                           );
                         },
-                        itemCount: model.data != null ? model.data.length : 0,
+                        itemCount: model.data?.length ?? 0,
                       ),
               ),
             ],
