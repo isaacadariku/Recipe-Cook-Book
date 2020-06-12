@@ -49,7 +49,6 @@ flutter:
   assets:
     - assets/
     - assets/images/
-    - assets/foodimages/
     - assets/fonts/
     - assets/api/json_response.json
     - assets/api/images/

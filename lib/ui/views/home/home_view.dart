@@ -20,7 +20,7 @@ class HomeView extends StatelessWidget {
           ),
         ),
         child: Scaffold(
-          backgroundColor: Color(0xffeeeeee),
+          backgroundColor: Color(0xffefefef),
           body: SafeArea(
             child: Container(
               padding: EdgeInsets.all(16.0),
