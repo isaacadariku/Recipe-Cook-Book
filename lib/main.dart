@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:recipe_cook_book/core/services/storage_util_service.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import 'app/locator.dart';
 import 'app/router.dart';
 
-void main() async {
-// Injecting all services that needs to start
+void main() {
   setupLocator();
 
-// Setting Status bar
+  // Setting Status bar
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -28,8 +28,12 @@ class App extends StatelessWidget {
       DeviceOrientation.portraitUp
     ]); // Settting preferred Screen Orientation
     return CupertinoApp(
+      localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+        DefaultMaterialLocalizations.delegate,
+        DefaultWidgetsLocalizations.delegate,
+      ],
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.onboardingViewRoute,
+      initialRoute: Routes.startupViewRoute,
       onGenerateRoute: Router().onGenerateRoute,
       navigatorKey: locator<NavigationService>().navigatorKey,
     );
